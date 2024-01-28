@@ -1,6 +1,7 @@
 import time
 import curses
 from acync_animation import blink
+from fire_animation import fire
 import random
 
 
@@ -22,7 +23,9 @@ def draw(canvas):
     row, column = curses.window.getmaxyx(canvas)
     curses.curs_set(False)
     canvas.border()
+    fire_coroutine = fire(canvas, row/2, column/2)
     coroutines = generate_stars_corounes(canvas, row, column, qty=150)
+    coroutines.append(fire_coroutine)
     while True:
         for coroutine in coroutines.copy():
             try:
